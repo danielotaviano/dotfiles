@@ -1,7 +1,7 @@
 SHELL = /bin/bash
 .DEFAULT_GOAL: help
 
-PACKAGES = zsh git tmux tool-versions nvim claude direnv ssh
+PACKAGES = zsh git tmux tool-versions nvim direnv
 
 help: ## Show all available commands
 	@awk 'BEGIN {FS = ":.*##"; printf "Usage: make \033[36m<target>\033[0m\n"} /^[.a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
@@ -10,7 +10,7 @@ help: ## Show all available commands
 
 install: ## Install dotfiles (first time setup)
 	@command -v stow >/dev/null || (echo "Installing GNU Stow..." && brew install stow)
-	@mkdir -p ~/.config/nvim ~/.config/direnv ~/.ssh/config.d ~/.secrets
+	@mkdir -p ~/.config/nvim ~/.config/direnv ~/.secrets
 	@for pkg in $(PACKAGES); do echo "Stowing $$pkg..."; stow -t ~ $$pkg; done
 	@echo "Done. Run 'source ~/.zshrc' to reload."
 
@@ -45,7 +45,7 @@ status: ## Show symlink status
 
 deps: ## Check required dependencies
 	@ok=true; \
-	for cmd in brew stow git nvim tmux asdf direnv opam jq curl cargo claude elan pipx rg gcc unzip node stylua reattach-to-user-namespace qmd fswatch; do \
+	for cmd in brew stow git nvim tmux asdf direnv jq curl rg node npm; do \
 		if command -v $$cmd >/dev/null 2>&1; then \
 			printf "  \e[32mOK\e[0m    %s (%s)\n" "$$cmd" "$$(command -v $$cmd)"; \
 		else \
@@ -53,10 +53,7 @@ deps: ## Check required dependencies
 		fi; \
 	done; \
 	printf "\n"; \
-	brew list gd >/dev/null 2>&1 \
-		&& printf "  \e[32mOK\e[0m    %s\n" "brew:gd" \
-		|| (printf "  \e[31mMISS\e[0m  %s\n" "brew:gd"; ok=false); \
-	for dir in ~/.oh-my-zsh ~/.cargo ~/.secrets ~/vault; do \
+	for dir in ~/.oh-my-zsh ~/.secrets; do \
 		if [ -d "$$dir" ]; then \
 			printf "  \e[32mOK\e[0m    %s\n" "$$dir"; \
 		else \
@@ -67,7 +64,7 @@ deps: ## Check required dependencies
 
 check: ## Verify all symlinks are intact
 	@ok=true; \
-	for f in ~/.zshrc ~/.gitconfig ~/.tmux.conf ~/.tool-versions ~/.mcp.json ~/.config/nvim/init.lua ~/.config/direnv/direnv.toml ~/.ssh/config; do \
+	for f in ~/.zshrc ~/.gitconfig ~/.tmux.conf ~/.tool-versions ~/.config/nvim/init.lua ~/.config/direnv/direnv.toml; do \
 		if [ -L "$$f" ]; then \
 			printf "  \e[32mOK\e[0m    %s -> %s\n" "$$f" "$$(readlink $$f)"; \
 		else \
