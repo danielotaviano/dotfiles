@@ -1,7 +1,7 @@
 SHELL = /bin/bash
 .DEFAULT_GOAL: help
 
-PACKAGES = zsh git tmux tool-versions nvim direnv
+PACKAGES = zsh git tmux tool-versions nvim direnv iterm2
 
 help: ## Show all available commands
 	@awk 'BEGIN {FS = ":.*##"; printf "Usage: make \033[36m<target>\033[0m\n"} /^[.a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-20s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
@@ -10,7 +10,7 @@ help: ## Show all available commands
 
 install: ## Install dotfiles (first time setup)
 	@command -v stow >/dev/null || (echo "Installing GNU Stow..." && brew install stow)
-	@mkdir -p ~/.config/nvim ~/.config/direnv ~/.secrets
+	@mkdir -p ~/.config/nvim ~/.config/direnv ~/.config/iterm2 ~/.secrets
 	@for pkg in $(PACKAGES); do echo "Stowing $$pkg..."; stow -t ~ $$pkg; done
 	@echo "Done. Run 'source ~/.zshrc' to reload."
 
@@ -64,7 +64,7 @@ deps: ## Check required dependencies
 
 check: ## Verify all symlinks are intact
 	@ok=true; \
-	for f in ~/.zshrc ~/.gitconfig ~/.tmux.conf ~/.tool-versions ~/.config/nvim/init.lua ~/.config/direnv/direnv.toml; do \
+	for f in ~/.zshrc ~/.gitconfig ~/.tmux.conf ~/.tool-versions ~/.config/nvim/init.lua ~/.config/direnv/direnv.toml ~/.config/iterm2; do \
 		if [ -L "$$f" ]; then \
 			printf "  \e[32mOK\e[0m    %s -> %s\n" "$$f" "$$(readlink $$f)"; \
 		else \

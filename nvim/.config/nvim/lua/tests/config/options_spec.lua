@@ -50,6 +50,10 @@ describe('Neovim Options', function()
     assert.equals(true, vim.opt.smartcase:get())
   end)
 
+  it('should configure errorformat', function()
+    assert.equals('%f(%l\\,%c): %t%*[^:]: %m', vim.o.errorformat)
+  end)
+
   it('should set scrolloff', function()
     assert.equals(10, vim.opt.scrolloff:get())
   end)

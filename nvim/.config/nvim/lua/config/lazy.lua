@@ -24,23 +24,16 @@ vim.opt.rtp:prepend(lazypath)
 -- ===================================================================
 -- Plugin Configuration
 -- ===================================================================
--- Setup lazy.nvim with automatic plugin loading from lua/plugins/
+-- Setup lazy.nvim with a minimal plugin set
 
 require('lazy').setup({
-  -- Import all plugin configurations from the plugins directory
-  -- This automatically loads any .lua file in lua/plugins/ and its subdirectories
-  { import = 'plugins.ui' }, -- UI plugins (theme, statusline, etc.)
-  { import = 'plugins.editor' }, -- Editor plugins (telescope, treesitter, etc.)
-  { import = 'plugins.coding' }, -- Coding plugins (LSP, completion, etc.)
-  { import = 'plugins.tools' }, -- Tool plugins (AI, markdown, etc.)
-
-  -- Keep existing kickstart plugins for compatibility
-  require 'kickstart.plugins.debug',
-  require 'kickstart.plugins.indent_line',
-  require 'kickstart.plugins.lint',
-  require 'kickstart.plugins.autopairs',
+  require 'plugins.ui.colorscheme',
+  require 'plugins.ui.which-key',
+  require 'plugins.editor.snacks',
+  require 'plugins.editor.treesitter',
+  require 'plugins.coding.lsp',
+  require 'plugins.coding.formatting',
   require 'kickstart.plugins.neo-tree',
-  require 'kickstart.plugins.gitsigns',
 }, {
   -- ===================================================================
   -- Lazy.nvim UI Configuration
@@ -63,15 +56,6 @@ require('lazy').setup({
       lazy = '💤 ',
     },
   },
-
-  -- ===================================================================
-  -- Performance Options
-  -- ===================================================================
-  install = {
-    -- Try to load one of these colorschemes when starting an installation during startup
-    colorscheme = { 'everforest' },
-  },
-
   -- Automatically check for plugin updates but don't notify
   checker = {
     enabled = false,

@@ -28,38 +28,20 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- ===================================================================
--- File Explorer (Neo-tree)
--- ===================================================================
-
--- Toggle Neo-tree file explorer
-vim.keymap.set('n', '<leader>n', '<cmd>Neotree toggle<CR>', { desc = 'Toggle [N]eo-tree', silent = true })
-
--- Reveal current file in Neo-tree
-vim.keymap.set('n', '<leader>k', '<cmd>Neotree reveal<CR>', { desc = 'Reveal in Neo-tree', silent = true })
-
--- ===================================================================
 -- Theme and UI
 -- ===================================================================
 
--- Toggle between dark and light theme
 vim.keymap.set('n', '<leader>tt', function()
-  vim.cmd [[hi clear]]
-
-  if vim.o.background == 'dark' then
-    vim.o.background = 'light'
-    vim.cmd 'colorscheme everforest'
-  else
-    vim.o.background = 'dark'
-    vim.cmd 'colorscheme everforest'
-  end
+  vim.o.background = vim.o.background == 'dark' and 'light' or 'dark'
+  vim.cmd.colorscheme 'gruvbox'
 end, { desc = 'Toggle [T]heme [D]ark/Light' })
 
 -- ===================================================================
--- Markdown Tools
+-- File Tree
 -- ===================================================================
 
--- Start Markdown preview
-vim.keymap.set('n', '<leader>mp', '<cmd>MarkdownPreview<CR>', { desc = '[M]arkdown [P]review', silent = true })
+vim.keymap.set('n', '<leader>n', '<cmd>Neotree toggle<CR>', { desc = 'Toggle [N]eo-tree', silent = true })
+vim.keymap.set('n', '<leader>k', '<cmd>Neotree reveal<CR>', { desc = 'Reveal in Neo-tree', silent = true })
 
 -- ===================================================================
 -- Utility Keymaps

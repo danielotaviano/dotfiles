@@ -1,8 +1,21 @@
 # Oh My Zsh
+if [ "$TMUX" = "" ]; then tmux; fi
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 plugins=(git)
 source $ZSH/oh-my-zsh.sh
+
+# Keep common iTerm2/macOS navigation shortcuts working in ZLE.
+bindkey '\eb' backward-word
+bindkey '\ef' forward-word
+bindkey '^[[1;3D' backward-word
+bindkey '^[[1;3C' forward-word
+bindkey '^[[H' beginning-of-line
+bindkey '^[[F' end-of-line
+bindkey '^[[1~' beginning-of-line
+bindkey '^[[4~' end-of-line
+bindkey '^[OH' beginning-of-line
+bindkey '^[OF' end-of-line
 
 # Editor / terminal
 export TERM="xterm-256color"

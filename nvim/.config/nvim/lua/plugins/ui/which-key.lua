@@ -10,7 +10,7 @@ return {
 
   opts = {
     -- Timing configuration
-    delay = 0, -- No delay - show immediately when keys are pressed
+    delay = 300, -- Small delay so fast key sequences don't flash the popup
 
     -- Icon configuration based on Nerd Font availability
     icons = {
@@ -53,9 +53,6 @@ return {
     -- Key group documentation
     -- This helps organize and explain what different key prefixes do
     spec = {
-      -- Code-related actions (LSP, formatting, etc.)
-      { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
-
       -- Document/buffer actions
       { '<leader>d', group = '[D]ocument' },
 
@@ -70,9 +67,6 @@ return {
 
       -- Toggle operations (theme, options, etc.)
       { '<leader>t', group = '[T]oggle' },
-
-      -- Git hunk operations (from gitsigns)
-      { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
     },
 
     -- Window configuration

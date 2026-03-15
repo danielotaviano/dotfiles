@@ -6,37 +6,12 @@
 -- See: https://github.com/williamboman/mason.nvim
 
 return {
-  -- ===================================================================
-  -- LazyDev - Lua LSP for Neovim Configuration
-  -- ===================================================================
-  -- Enhanced Lua LSP specifically for Neovim config development
-  {
-    'folke/lazydev.nvim',
-    ft = 'lua', -- Only load for Lua files
-    opts = {
-      library = {
-        -- Load luvit types when the `vim.uv` word is found
-        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
-      },
-    },
-  },
-
-  -- ===================================================================
-  -- Main LSP Configuration
-  -- ===================================================================
   {
     'neovim/nvim-lspconfig',
     dependencies = {
-      -- Mason must be loaded first
       { 'williamboman/mason.nvim', opts = {} },
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
-
-      -- LSP status updates
-      { 'j-hui/fidget.nvim', opts = {} },
-
-      -- Enhanced capabilities from nvim-cmp
-      'hrsh7th/cmp-nvim-lsp',
     },
 
     config = function()
@@ -96,12 +71,8 @@ return {
         },
       }
 
-      -- ===================================================================
-      -- LSP Capabilities
-      -- ===================================================================
-      -- Extend default LSP capabilities with completion support
+      -- Default LSP capabilities
       local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       -- ===================================================================
       -- Language Server Configuration
@@ -169,10 +140,25 @@ return {
           },
         },
 
+        -- JavaScript/TypeScript
+        ts_ls = {
+          settings = {
+            typescript = {
+              preferences = {
+                preferGoToSourceDefinition = true,
+              },
+            },
+            javascript = {
+              preferences = {
+                preferGoToSourceDefinition = true,
+              },
+            },
+          },
+        },
+
         -- Add more servers as needed:
         -- Go: gopls = {}
         -- Python: pyright = {} or pylsp = {}
-        -- JavaScript/TypeScript: ts_ls = {}
         -- C/C++: clangd = {}
         -- See `:help lspconfig-all` for complete list
       }

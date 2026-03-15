@@ -26,6 +26,7 @@ Personal dotfiles managed with GNU Stow. Each top-level directory is a stow pack
 - `~/.zshrc.local` for machine-specific shell config, not tracked
 - `~/.claude/settings.json` is machine-specific (permissions), not tracked. Claude writes to it automatically
 - `~/.claude/settings.local.json` is portable (hooks, plugins, statusline), tracked via stow
+- `~/.config/iterm2/` is a directory-level symlink managed by stow; it contains the portable `com.googlecode.iterm2.plist` once iTerm2 is pointed at `~/.config/iterm2`
 - SSH host entries live in `~/.ssh/config.d/`, not tracked
 - nvim CI workflow lives at repo root `.github/workflows/ci.yml` with path filter
 - `~/vault` symlinks to Obsidian iCloud storage. Skills and hooks depend on `qmd` for semantic search

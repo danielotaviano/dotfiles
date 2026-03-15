@@ -65,6 +65,8 @@ vim.opt.smartcase = true
 -- Show live preview of substitute commands as you type
 vim.opt.inccommand = 'split'
 
+vim.opt.errorformat = '%f(%l\\,%c): %t%*[^:]: %m'
+
 -- ===================================================================
 -- Timing Options
 -- ===================================================================

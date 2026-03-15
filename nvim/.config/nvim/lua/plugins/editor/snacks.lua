@@ -154,7 +154,7 @@ return {
 
       -- Better indentation guides
       indent = {
-        enabled = true,
+        enabled = false,
         animate = {
           enabled = true,
         },

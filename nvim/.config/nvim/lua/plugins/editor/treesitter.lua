@@ -7,6 +7,7 @@
 return {
   'nvim-treesitter/nvim-treesitter',
   build = ':TSUpdate', -- Update parsers when plugin updates
+  branch = 'master',
   main = 'nvim-treesitter.configs', -- Use this as the main module for opts
   event = { 'BufReadPre', 'BufNewFile' }, -- Load when opening files
 

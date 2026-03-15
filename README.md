@@ -26,6 +26,7 @@ xcode-select --install
 
 ```bash
 brew install stow neovim tmux asdf direnv jq ripgrep reattach-to-user-namespace
+brew install --cask iterm2
 ```
 
 | Package | What it does |
@@ -38,6 +39,7 @@ brew install stow neovim tmux asdf direnv jq ripgrep reattach-to-user-namespace
 | `jq` | JSON processor for shell scripts |
 | `ripgrep` | Fast project search (used by nvim tools) |
 | `reattach-to-user-namespace` | macOS clipboard integration for tmux |
+| `iterm2` | Terminal emulator used by this setup |
 
 ### 4. Oh My Zsh
 
@@ -68,15 +70,24 @@ source ~/.zshrc
 
 Open `nvim`. Plugin manager will install configured plugins on first launch.
 
-## iTerm2 recommendations
+## iTerm2 setup
 
-- Preferences → Profiles → Terminal
-  - Report Terminal Type: `xterm-256color`
-- Preferences → Keys
-  - Left Option key: `Esc+`
-  - Right Option key: `Esc+`
+The repo now tracks iTerm2 preferences in [`iterm2/.config/iterm2/com.googlecode.iterm2.plist`](iterm2/.config/iterm2/com.googlecode.iterm2.plist), inside a directory-level symlink at `~/.config/iterm2/`.
 
-This improves Meta/Alt key behavior for tmux and Neovim mappings.
+After `make install` or `make stow-iterm2`, enable the custom folder once in iTerm2:
+
+1. Open iTerm2 → Settings → Preferences
+2. Enable `Load preferences from a custom folder or URL`
+3. Set the folder to `~/.config/iterm2`
+4. Restart iTerm2
+
+Tracked defaults include:
+- Report Terminal Type: `xterm-256color`
+- Left Option key: `Esc+`
+- Right Option key: `Esc+`
+- Current profile appearance, fonts, and colors
+
+This keeps tmux, zsh, and Neovim Meta/Alt mappings consistent on macOS.
 
 ## Usage
 
@@ -101,3 +112,4 @@ make lint           # Check for hardcoded paths
 | `tool-versions` | `.tool-versions` (asdf defaults) |
 | `nvim` | `.config/nvim/` |
 | `direnv` | `.config/direnv/direnv.toml` |
+| `iterm2` | `.config/iterm2/` |
