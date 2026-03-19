@@ -75,9 +75,17 @@ check: ## Verify all symlinks are intact
 
 lint: ## Check for hardcoded paths
 	@echo "Checking for hardcoded /Users/ paths..."
-	@grep -rn "/Users/" . --include='*' \
+	@matches=$$(grep -rn "/Users/" . --include='*' \
 		--exclude-dir=.git \
+		--exclude-dir=sockets \
 		--exclude=Makefile \
+		2>/dev/null \
 		| grep -v '.gitconfig:.*email' \
-		| grep -v 'github.com' \
-		&& (printf "\e[31mFound hardcoded paths!\e[0m\n" && false) || echo "Clean."
+		| grep -v 'github.com' || true); \
+	if [ -n "$$matches" ]; then \
+		echo "$$matches"; \
+		printf "\e[31mFound hardcoded paths!\e[0m\n"; \
+		false; \
+	else \
+		echo "Clean."; \
+	fi
