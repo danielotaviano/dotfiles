@@ -31,3 +31,7 @@ export MANPAGER="nvim +Man!"
 # direnv
 eval "$(direnv hook zsh 2>/dev/null)"
 export DIRENV_LOG_FORMAT=""
+export PATH="$HOME/.local/bin:$PATH"
+
+# Added by LM Studio CLI tool (lms)
+export PATH="$PATH:/Users/danielotaviano/.lmstudio/bin"
