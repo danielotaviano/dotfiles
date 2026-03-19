@@ -14,6 +14,43 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear search highl
 -- Open diagnostic quickfix list
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
+local function diagnostic_virtual_text_config()
+  return {
+    source = 'if_many',
+    spacing = 2,
+    format = function(diagnostic)
+      return diagnostic.message
+    end,
+  }
+end
+
+local function set_diagnostic_virtual_text(enabled)
+  local virtual_text = enabled and diagnostic_virtual_text_config() or false
+
+  vim.diagnostic.config { virtual_text = virtual_text }
+
+  local ok, namespaces = pcall(vim.diagnostic.get_namespaces)
+  if ok then
+    for namespace in pairs(namespaces) do
+      vim.diagnostic.config({ virtual_text = virtual_text }, namespace)
+    end
+  end
+
+  vim.g.diagnostic_virtual_text_enabled = enabled
+  vim.cmd 'redraw'
+end
+
+-- Toggle inline diagnostic virtual text without disabling other diagnostics
+vim.keymap.set('n', '<leader>te', function()
+  local enabled = vim.g.diagnostic_virtual_text_enabled ~= false
+  set_diagnostic_virtual_text(not enabled)
+
+  vim.notify(
+    ('Inline diagnostics %s'):format(vim.g.diagnostic_virtual_text_enabled and 'enabled' or 'disabled'),
+    vim.log.levels.INFO
+  )
+end, { desc = 'Toggle inline diagnostic [E]rrors' })
+
 -- Easier exit from terminal mode (double Escape)
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 

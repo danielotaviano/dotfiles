@@ -47,6 +47,16 @@ describe('Completion Configuration', function()
       end
     end
   end)
+
+  it('should enable LSP completion capabilities', function()
+    if _G.lsp_capabilities then
+      local completion = _G.lsp_capabilities.textDocument
+        and _G.lsp_capabilities.textDocument.completion
+        and _G.lsp_capabilities.textDocument.completion.completionItem
+
+      assert.is_not_nil(completion)
+    end
+  end)
 end)
 
 describe('LuaSnip Configuration', function()

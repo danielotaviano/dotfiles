@@ -55,6 +55,12 @@ vim.opt.undofile = true
 -- Keep at least 10 screen lines above and below the cursor when scrolling
 vim.opt.scrolloff = 10
 
+-- Use two-space indentation for all files unless overridden
+vim.opt.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
+
 -- ===================================================================
 -- Search Configuration
 -- ===================================================================

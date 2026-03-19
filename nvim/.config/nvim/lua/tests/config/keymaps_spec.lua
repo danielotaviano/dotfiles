@@ -49,6 +49,20 @@ describe('Basic Keymaps', function()
 
     assert.is_not_nil(diagnostic_map)
   end)
+
+  it('should have inline diagnostic toggle keymap', function()
+    local keymap = vim.api.nvim_get_keymap 'n'
+    local toggle_map = nil
+
+    for _, map in ipairs(keymap) do
+      if map.lhs == ';te' then
+        toggle_map = map
+        break
+      end
+    end
+
+    assert.is_not_nil(toggle_map)
+  end)
 end)
 
 describe('Keymap Helper Functions', function()

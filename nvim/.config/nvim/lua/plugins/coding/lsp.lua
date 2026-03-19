@@ -36,6 +36,16 @@ return {
       -- Diagnostic Configuration
       -- ===================================================================
       -- Configure how LSP diagnostics are displayed
+      local virtual_text_config = {
+        source = 'if_many', -- Show source if multiple
+        spacing = 2, -- Space between text and diagnostic
+        format = function(diagnostic)
+          return diagnostic.message
+        end,
+      }
+
+      vim.g.diagnostic_virtual_text_enabled = true
+
       vim.diagnostic.config {
         -- Sort diagnostics by severity (errors first)
         severity_sort = true,
@@ -62,17 +72,16 @@ return {
         } or {},
 
         -- Virtual text configuration
-        virtual_text = {
-          source = 'if_many', -- Show source if multiple
-          spacing = 2, -- Space between text and diagnostic
-          format = function(diagnostic)
-            return diagnostic.message
-          end,
-        },
+        virtual_text = virtual_text_config,
       }
 
       -- Default LSP capabilities
       local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+      local ok, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+      if ok then
+        capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
+      end
 
       -- ===================================================================
       -- Language Server Configuration
